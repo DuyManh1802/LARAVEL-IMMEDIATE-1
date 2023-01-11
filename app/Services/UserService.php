@@ -10,22 +10,23 @@
         public function allUser()
         {
             return User::orderBy('email')->paginate(20);
+            // return User::onlyTrashed()->paginate(20);
         }
 
         public function storeUser(Request $request): User
         {
             return User::create([
                 'name' => $request->name,
-               'email' => $request->email,
-               'password' => Hash::make($request->password),
-               'address' => $request->address,
-               'phone' => $request->phone
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'address' => $request->address,
+                'phone' => $request->phone
             ]);
         }
 
         public function findId($id)
         {
-            return User::where('id', $id)->get();
+            return User::find($id);
         }
 
         public function updateUser(Request $request, $id):void

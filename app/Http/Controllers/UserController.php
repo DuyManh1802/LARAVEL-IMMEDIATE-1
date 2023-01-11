@@ -12,9 +12,16 @@
 
     class UserController extends Controller
     {
-        public function index(UserService $UserService)
+        private $UserService;
+
+        public function __construct()
         {
-            $users = $UserService->allUser();
+            $this->UserService = new UserService();
+        }
+
+        public function index()
+        {
+            $users = $this->UserService->allUser();
 
             return view('user.list', compact('users'));
         }
@@ -24,34 +31,38 @@
             return view('user.create');
         }
 
-        public function store(CreateUserRequest $request, UserService $UserService)
+        public function store(CreateUserRequest $request)
         {
-            $UserService->storeUser($request);
-
-            return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.' );
+            if ($this->UserService->storeUser($request)){
+                return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.');
+            } else {
+                return back()->with('error', 'Thêm mới người dùng k thành công.');
+            }
         }
 
-        public function edit($id, UserService $UserService)
+        public function edit($id)
         {
-            $users = $UserService->findId($id);
+            $users = $this->UserService->findId($id);
 
             return view('user.edit', compact('users'));
         }
 
-        public function update(EditUserRequest $request, $id, UserService $UserService)
+        public function update(EditUserRequest $request, $id)
         {
-            $UserService->findId($id);
-            $UserService->updateUser($request, $id);
-
-            return back()->with('success', 'Sửa thông tin người dùng thành công.');
+            if ($this->UserService->updateUser($request, $id)){
+                return redirect()->route('user.list')->with('success', 'Sửa người dùng thành công.');
+            } else {
+                return back()->with('error', 'Sửa thông tin người dùng k thành công.');
+            }
         }
 
-        public function delete($id, UserService $UserService)
-        {   
-            $UserService->findId($id);
-            $UserService->deleteUser($id);
-
-            return back()->with('success', 'Xóa người dùng thành công.' );
+        public function delete($id)
+        {
+            if ($this->UserService->deleteUser($id)){
+                return redirect()->route('user.list')->with('success', 'Xóa người dùng thành công.');
+            } else {
+                return back()->with('error', 'Xóa người dùng k thành công.');
+            }
         }
     }
 ?>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
 
 class EditUserRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class EditUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>'required|string|max:255',
-            'email' => 'required|string|unique:users|email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|unique:users|email,'.$user->id,
             'address' => 'required|string',
             'phone'=> 'required|string'
         ];

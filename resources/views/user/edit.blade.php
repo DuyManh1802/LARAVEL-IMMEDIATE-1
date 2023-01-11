@@ -8,13 +8,13 @@
             <form method="POST" action="{{ route('user.update') }}">
                 @csrf
                 @method('put')
-                @foreach ($users as $item)
+
                 <div class="row mb-3">
                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                            name="name" value="{{ $item->name }}" required autocomplete="name" autofocus>
+                            name="name" value="{{ $users->name }}" required autocomplete="name" autofocus>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
 
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                            name="email" value="{{ $item->email }}">
+                            name="email" value="{{ $users->email }}">
 
                         @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
 
                     <div class="col-md-6">
                         <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
-                            name="address" value="{{ $item->address }}">
+                            name="address" value="{{ $users->address }}">
 
                         @error('address')
                         <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
 
                     <div class="col-md-6">
                         <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror"
-                            name="phone" value="{{ $item->phone }}">
+                            name="phone" value="{{ $users->phone }}">
 
                         @error('phone')
                         <span class="invalid-feedback" role="alert">
@@ -67,7 +67,6 @@
                         @enderror
                     </div>
                 </div>
-                @endforeach
 
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
