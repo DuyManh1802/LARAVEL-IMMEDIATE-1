@@ -9,6 +9,7 @@
     use App\Services\UserService;
     use App\Http\Requests\CreateUserRequest;
     use App\Http\Requests\EditUserRequest;
+    use Exception;
 
     class UserController extends Controller
     {
@@ -34,12 +35,16 @@
         public function store(CreateUserRequest $request)
         {
             try {
-                $this->userService->storeUser($request);
-            } catch (ModelNotFoundException $exception) {
-                return back()->withError($exception->getMessage());
-            }
+                $result = $this->userService->storeUser($request);
 
-            return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.');
+                if ($result){
+                    return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.');
+                } else {
+                    return back()->with('error', 'Thêm mới người dùng k thành công.');
+                }
+            } catch (Exception $exception) {
+                throw new Exception("Error Processing Request", 1);
+            }
         }
 
         public function edit($id)
@@ -52,23 +57,31 @@
         public function update(EditUserRequest $request, $id)
         {
             try {
-                $this->userService->updateUser($request, $id);
-            } catch (ModelNotFoundException $exception) {
-                return back()->withError($exception->getMessage());
-            }
+                $result = $this->userService->updateUser($request, $id);
 
-            return redirect()->route('user.list')->with('success', 'Sửa người dùng thành công.');
+                if ($result){
+                    return redirect()->route('user.list')->with('success', 'Sửa người dùng thành công.');
+                } else {
+                    return back()->with('error', 'Sửa người dùng k thành công.');
+                }
+            } catch (Exception $exception) {
+                throw new Exception("Error Processing Request", 1);
+            }
         }
 
         public function delete($id)
         {
             try {
-                $this->userService->deleteUser($id);
-            } catch (ModelNotFoundException $exception) {
-                return back()->withError($exception->getMessage());
+                $result = $this->userService->deleteUser($id);
+
+                if ($result){
+                    return redirect()->route('user.list')->with('success', 'Xóa người dùng thành công.');
+                } else {
+                    return back()->with('error', 'Xóa người dùng k thành công.');
+                }
+            } catch (Exception $exception) {
+                throw new Exception("Error Processing Request", 1);
             }
-            
-            return redirect()->route('user.list')->with('success', 'Xóa người dùng thành công.');
         }
     }
 ?>

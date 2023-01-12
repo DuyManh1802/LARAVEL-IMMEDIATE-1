@@ -7,9 +7,7 @@
     </div>
     @endif
     @if (session('error'))
-    <div class="alert alert-success">
-        <h5>{{ session('error') }}</h5>
-    </div>
+    <div class="alert alert-danger text-center">{{ session('error') }}</div>
     @endif
 
     <a class="dropdown-item" href="{{ route('user.create') }}">

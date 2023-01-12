@@ -27,9 +27,9 @@ class EditUserRequest extends FormRequest
         return [
             'id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'email' => 'required|string|unique:users|email,'.$user->id,
-            'address' => 'required|string',
-            'phone'=> 'required|string'
+            'email' => 'required|string|unique:users|email|max:100',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|regex:/(0)[0-9]{0,15}/'
         ];
     }
 }
