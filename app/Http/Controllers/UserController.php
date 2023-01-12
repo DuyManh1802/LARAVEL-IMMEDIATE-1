@@ -12,16 +12,16 @@
 
     class UserController extends Controller
     {
-        private $UserService;
+        private $userService;
 
         public function __construct()
         {
-            $this->UserService = new UserService();
+            $this->userService = new UserService();
         }
 
         public function index()
         {
-            $users = $this->UserService->allUser();
+            $users = $this->userService->allUser();
 
             return view('user.list', compact('users'));
         }
@@ -33,36 +33,42 @@
 
         public function store(CreateUserRequest $request)
         {
-            if ($this->UserService->storeUser($request)){
-                return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.');
-            } else {
-                return back()->with('error', 'Thêm mới người dùng k thành công.');
+            try {
+                $this->userService->storeUser($request);
+            } catch (ModelNotFoundException $exception) {
+                return back()->withError($exception->getMessage());
             }
+
+            return redirect()->route('user.list')->with('success', 'Thêm mới người dùng thành công.');
         }
 
         public function edit($id)
         {
-            $users = $this->UserService->findId($id);
+            $users = $this->userService->findId($id);
 
             return view('user.edit', compact('users'));
         }
 
         public function update(EditUserRequest $request, $id)
         {
-            if ($this->UserService->updateUser($request, $id)){
-                return redirect()->route('user.list')->with('success', 'Sửa người dùng thành công.');
-            } else {
-                return back()->with('error', 'Sửa thông tin người dùng k thành công.');
+            try {
+                $this->userService->updateUser($request, $id);
+            } catch (ModelNotFoundException $exception) {
+                return back()->withError($exception->getMessage());
             }
+
+            return redirect()->route('user.list')->with('success', 'Sửa người dùng thành công.');
         }
 
         public function delete($id)
         {
-            if ($this->UserService->deleteUser($id)){
-                return redirect()->route('user.list')->with('success', 'Xóa người dùng thành công.');
-            } else {
-                return back()->with('error', 'Xóa người dùng k thành công.');
+            try {
+                $this->userService->deleteUser($id);
+            } catch (ModelNotFoundException $exception) {
+                return back()->withError($exception->getMessage());
             }
+            
+            return redirect()->route('user.list')->with('success', 'Xóa người dùng thành công.');
         }
     }
 ?>

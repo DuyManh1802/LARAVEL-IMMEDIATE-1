@@ -25,6 +25,7 @@ class EditUserRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|integer',
             'name' => 'required|string|max:255',
             'email' => 'required|string|unique:users|email,'.$user->id,
             'address' => 'required|string',
