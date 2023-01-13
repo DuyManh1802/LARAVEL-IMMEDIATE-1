@@ -5,13 +5,23 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
     use Exception;
+    use App\Facades\HelperFacade;
+    use Illuminate\Support\Facades\DB;
 
-    class UserService
+    class UserService extends HelperFacade
     {
         public function allUser()
         {
             return User::orderBy('email')->paginate(20);
             // return User::onlyTrashed()->paginate(20);
+        }
+
+        public function searchUser(Request $request)
+        {
+            return User::orderBy('email')->where('email', 'LIKE', "%$request->email%")
+            ->where('name', 'LIKE', "%$request->name%")
+            ->where('address', 'LIKE', "%$request->address%")
+            ->where('phone', '=', "$request->phone")->paginate(20);
         }
 
         public function storeUser(Request $request): User

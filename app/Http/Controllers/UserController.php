@@ -20,11 +20,25 @@
             $this->userService = new UserService();
         }
 
-        public function index()
+        public function index(Request $request)
         {
-            $users = $this->userService->allUser();
+            if ($request->has('search')){
+                try {
+                    $users = $this->userService->searchUser($request);
 
-            return view('user.list', compact('users'));
+                    if ($users->count() > 0){
+                        return view('user.list', compact('users'));
+                    } else {
+                        return back()->with('error', 'Không có người dùng nào khớp với tìm kiếm.');
+                    }
+                } catch (Exception $exception) {
+                    throw new Exception("Error Processing Request", 1);
+                }
+            } else {
+                $users = $this->userService->allUser();
+
+                return view('user.list', compact('users'));
+            }
         }
 
         public function create()

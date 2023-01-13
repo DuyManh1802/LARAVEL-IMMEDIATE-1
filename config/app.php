@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'title_listUser' => 'Danh sách người dùng',
+    'title_createUser' => 'Thêm mới người dùng',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -229,7 +232,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'HelperFacade' => App\Facades\HelperFacade::class,
     ],
 
 ];
