@@ -60,7 +60,7 @@
         @foreach ( $users as $key => $user )
         <tr>
             <th scope="row">{{ $key+1 }}</th>
-            <td>{{ HelperFacade::toUpperCase($user->name) }}</td>
+            <td>{{ UpperText::upperText($user->name) }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->address }}</td>
             <td>{{ $user->phone }}</td>

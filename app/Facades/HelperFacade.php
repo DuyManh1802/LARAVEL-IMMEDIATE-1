@@ -7,9 +7,9 @@
 
     class HelperFacade extends Facade
     {
-        protected static function toUpperCase($value)
+        protected static function getFacadeAccessor()
         {
-            return strtoupper($value);
+            return 'UpperText';
         }
     }
 ?>
