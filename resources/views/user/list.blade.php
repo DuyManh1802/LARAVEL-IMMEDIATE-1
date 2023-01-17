@@ -9,6 +9,9 @@
 @if (session('error'))
 <div class="alert alert-danger text-center">{{ session('error') }}</div>
 @endif
+@if (session('alert'))
+<div class="alert alert-danger text-center">{{ session('alert') }}</div>
+@endif
 
 <div>
     <h5>Số người dùng: {{ $users->count() }}</h5>

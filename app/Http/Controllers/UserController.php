@@ -22,22 +22,16 @@
 
         public function index(Request $request)
         {
-            if ($request->has('search')){
-                try {
-                    $users = $this->userService->searchUser($request);
+            try {
+                $users = $this->userService->allUser($request);
 
-                    if ($users->count() > 0){
-                        return view('user.list', compact('users'));
-                    } else {
-                        return back()->with('error', 'Không có người dùng nào khớp với tìm kiếm.');
-                    }
-                } catch (Exception $exception) {
-                    throw new Exception("Error Processing Request", 1);
+                if ($users != null){
+                    return view('user.list', compact('users'));
+                } else {
+                    return view('user.list', compact('users'))->with('alert', 'Không có người dùng nào khớp với tìm kiếm.');
                 }
-            } else {
-                $users = $this->userService->allUser();
-
-                return view('user.list', compact('users'));
+            } catch (Exception $exception) {
+                throw new Exception("Error Processing Request", 1);
             }
         }
 

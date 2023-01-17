@@ -8,20 +8,18 @@
     use App\Facades\HelperFacade;
     use Illuminate\Support\Facades\DB;
 
-    class UserService extends HelperFacade
+    class UserService
     {
-        public function allUser()
+        public function allUser(Request $request)
         {
-            return User::orderBy('email')->paginate(20);
-            // return User::onlyTrashed()->paginate(20);
-        }
-
-        public function searchUser(Request $request)
-        {
-            return User::orderBy('email')->where('email', 'LIKE', "%$request->email%")
-            ->where('name', 'LIKE', "%$request->name%")
-            ->where('address', 'LIKE', "%$request->address%")
-            ->where('phone', '=', "$request->phone")->paginate(20);
+            if ($request->has('search')){
+                return User::orderBy('email')->where('email', 'LIKE', "%$request->email%")
+                ->where('name', 'LIKE', "%$request->name%")
+                ->where('address', 'LIKE', "%$request->address%")
+                ->where('phone', '=', "$request->phone")->paginate(20);
+            } else {
+                return User::orderBy('email')->paginate(20);
+            }
         }
 
         public function storeUser(Request $request): User
