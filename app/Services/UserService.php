@@ -33,15 +33,26 @@
             return $user->paginate(20);
         }
 
-        public function storeUser(Request $request): User
+        public function storeUser(Request $request)
         {
-            return User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'address' => $request->address,
-                'phone' => $request->phone
-            ]);
+            try {
+                DB::beginTransaction();
+
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'address' => $request->address,
+                    'phone' => $request->phone
+                ]);
+
+                DB::commit();
+            } catch (Exception $ex){
+                dd($ex);
+                DB::rollBack();
+            }
+
+            return $user;
         }
 
         public function findId($id)
@@ -51,17 +62,39 @@
 
         public function updateUser(Request $request, $id)
         {
-            return User::find($id)->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'address' => $request->address,
-                'phone' => $request->phone,
-            ]);
+            try {
+                DB::beginTransaction();
+
+                $user = User::find($id)->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                ]);
+
+                DB::commit();
+            } catch (Exception $ex){
+                dd($ex);
+                DB::rollBack();
+            }
+
+            return $user;
         }
 
         public function deleteUser($id)
         {
-            return User::find($id)->delete();
+            try {
+                DB::beginTransaction();
+
+                $user = User::find($id)->delete();
+
+                DB::commit();
+            } catch (Exception $ex){
+                dd($ex);
+                DB::rollBack();
+            }
+
+            return $user;
         }
     }
 ?>
