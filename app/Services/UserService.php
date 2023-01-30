@@ -12,12 +12,20 @@
     {
         public function allUser(Request $request)
         {
-            if ($request->has('search')){
-                return User::orderBy('email')->where('email', 'LIKE', "%$request->email%")
-                ->where('name', 'LIKE', "%$request->name%")
-                ->where('address', 'LIKE', "%$request->address%")
-                ->where('phone', '=', "$request->phone")->paginate(20);
+            $user = User::orderBy('email')
+            ->where('email', 'LIKE', "%$request->email%")
+            ->where('name', 'LIKE', "%$request->name%")
+            ->where('address', 'LIKE', "%$request->address%")
+            ->orWhere('phone', '=', "$request->phone")
+            ->paginate(20);
+
+            if ($user->count() > 0){
+                return $user;
             } else {
+                echo "<script>";
+                echo "alert('Không có Người dùng nào phù hợp với kết quả tìm kiếm!');";
+                echo "</script>";
+
                 return User::orderBy('email')->paginate(20);
             }
         }

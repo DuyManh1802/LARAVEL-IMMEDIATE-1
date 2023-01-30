@@ -42,7 +42,7 @@
                         <input type="text" class="form-control mr-2" name="phone" placeholder="Phone">
                     </li>
 
-                    <button type="submit" class="btn btn-primary" name="search">Tìm kiếm</button>
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </ul>
             </li>
         </ul>

@@ -24,15 +24,11 @@
         {
             try {
                 $users = $this->userService->allUser($request);
-
-                if ($users != null){
-                    return view('user.list', compact('users'));
-                } else {
-                    return view('user.list', compact('users'))->with('alert', 'Không có người dùng nào khớp với tìm kiếm.');
-                }
             } catch (Exception $exception) {
                 throw new Exception("Error Processing Request", 1);
             }
+
+            return view('user.list', compact('users'));
         }
 
         public function create()
