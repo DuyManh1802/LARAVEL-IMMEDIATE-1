@@ -48,7 +48,6 @@
 
                 DB::commit();
             } catch (Exception $ex){
-                dd($ex);
                 DB::rollBack();
             }
 
@@ -74,7 +73,6 @@
 
                 DB::commit();
             } catch (Exception $ex){
-                dd($ex);
                 DB::rollBack();
             }
 
@@ -90,7 +88,6 @@
 
                 DB::commit();
             } catch (Exception $ex){
-                dd($ex);
                 DB::rollBack();
             }
 
