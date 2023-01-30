@@ -12,22 +12,25 @@
     {
         public function allUser(Request $request)
         {
-            $user = User::orderBy('email')
-            ->where('email', 'LIKE', "%$request->email%")
-            ->where('name', 'LIKE', "%$request->name%")
-            ->where('address', 'LIKE', "%$request->address%")
-            ->orWhere('phone', '=', "$request->phone")
-            ->paginate(20);
+            $user = User::orderBy('email');
 
-            if ($user->count() > 0){
-                return $user;
-            } else {
-                echo "<script>";
-                echo "alert('Không có Người dùng nào phù hợp với kết quả tìm kiếm!');";
-                echo "</script>";
-
-                return User::orderBy('email')->paginate(20);
+            if (isset($request->email)){
+                $user = $user->where('email', 'LIKE', "%$request->email%");
             }
+
+            if (isset($request->name)){
+                $user = $user->where('name', 'LIKE', "%$request->name%");
+            }
+
+            if (isset($request->address)){
+                $user = $user->where('address', 'LIKE', "%$request->address%");
+            }
+
+            if (isset($request->phone)){
+                $user = $user->where('phone', '=', "$request->phone");
+            }
+
+            return $user->paginate(20);
         }
 
         public function storeUser(Request $request): User
@@ -46,9 +49,9 @@
             return User::find($id);
         }
 
-        public function updateUser(Request $request, $id):void
+        public function updateUser(Request $request, $id)
         {
-            User::where('id', $id)->update([
+            return User::find($id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'address' => $request->address,
@@ -56,9 +59,9 @@
             ]);
         }
 
-        public function deleteUser($id):void
+        public function deleteUser($id)
         {
-            User::where('id', $id)->delete();
+            return User::find($id)->delete();
         }
     }
 ?>
