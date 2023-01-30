@@ -1,4 +1,4 @@
-@extends('./../layouts.app')
+@extends('./../layouts.default')
 @section('content')
 <div class="col-md-8">
     <div class="card">

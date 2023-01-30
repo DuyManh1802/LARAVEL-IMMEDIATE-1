@@ -20,9 +20,13 @@
             $this->userService = new UserService();
         }
 
-        public function index()
+        public function index(Request $request)
         {
-            $users = $this->userService->allUser();
+            try {
+                $users = $this->userService->allUser($request);
+            } catch (Exception $exception) {
+                throw new Exception("Error Processing Request", 1);
+            }
 
             return view('user.list', compact('users'));
         }
