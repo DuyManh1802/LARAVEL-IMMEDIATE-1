@@ -7,6 +7,8 @@
     use Exception;
     use App\Facades\HelperFacade;
     use Illuminate\Support\Facades\DB;
+    use App\Mail\WelcomeEmail;
+    use Illuminate\Support\Facades\Mail;
 
     class UserService
     {
@@ -43,15 +45,17 @@
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'address' => $request->address,
-                    'phone' => $request->phone
+                    'phone' => $request->phone,
+                    'role' => $request->role
                 ]);
+                Mail::to($request['email'])->send(new WelcomeEmail($user));
 
                 DB::commit();
             } catch (Exception $ex){
                 DB::rollBack();
             }
 
-            return $user;
+             return $user;
         }
 
         public function findId($id)
@@ -69,6 +73,7 @@
                     'email' => $request->email,
                     'address' => $request->address,
                     'phone' => $request->phone,
+                    'role' => $request->role
                 ]);
 
                 DB::commit();

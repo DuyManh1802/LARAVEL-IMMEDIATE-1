@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use Exception;
 
 class HomeController extends Controller
 {
@@ -11,9 +13,12 @@ class HomeController extends Controller
      *
      * @return void
      */
+    private $userService;
+
     public function __construct()
     {
         $this->middleware('auth');
+        $this->userService = new UserService();
     }
 
     /**
@@ -21,8 +26,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        return view('home');
+        try {
+            $users = $this->userService->allUser($request);
+        } catch (Exception $exception) {
+            throw new Exception("Error Processing Request", 1);
+        }
+
+        return view('user.list', compact('users'));
     }
 }

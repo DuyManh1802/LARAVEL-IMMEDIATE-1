@@ -28,7 +28,8 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make(12345678),
                 'name' => $faker->userName,
                 'address' => $faker->streetAddress,
-                'phone' => $faker->numerify('0###-###-###'),
+                'phone' => $faker->numerify('0#########'),
+                'role' => $faker->boolean
             ]);
         }
     }

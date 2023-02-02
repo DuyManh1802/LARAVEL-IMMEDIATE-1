@@ -20,8 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('name', 255);
             $table->string('address', 255)->nullable();
             $table->string('phone', 15)->nullable();
+            $table->boolean('role');
             $table->timestamps();
             $table->softDeletes();
+            $table->rememberToken();
         });
     }
 

@@ -29,7 +29,8 @@ class EditUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|unique:users|email|max:100',
             'address' => 'required|string|max:255',
-            'phone' => 'required|regex:/(0)[0-9]{0,15}/'
+            'phone' => 'required|regex:/(0)[0-9]{0,15}/',
+            'role' => 'required'
         ];
     }
 }

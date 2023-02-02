@@ -47,7 +47,7 @@
                     return back()->with('error', 'Thêm mới người dùng k thành công.');
                 }
             } catch (Exception $exception) {
-                throw new Exception("Error Processing Request", 1);
+                throw new Exception($exception);
             }
         }
 
