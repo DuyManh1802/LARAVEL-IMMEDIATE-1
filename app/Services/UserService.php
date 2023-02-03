@@ -5,10 +5,10 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
     use Exception;
-    use App\Facades\HelperFacade;
     use Illuminate\Support\Facades\DB;
     use App\Mail\WelcomeEmail;
     use Illuminate\Support\Facades\Mail;
+    use App\Jobs\SendWelcomeEmail;
 
     class UserService
     {
@@ -48,7 +48,8 @@
                     'phone' => $request->phone,
                     'role' => $request->role
                 ]);
-                Mail::to($request['email'])->send(new WelcomeEmail($user));
+
+                Mail::to($request['email'])->queue(new WelcomeEmail($user));
 
                 DB::commit();
             } catch (Exception $ex){

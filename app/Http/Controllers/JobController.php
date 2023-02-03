@@ -11,8 +11,7 @@
          */
         public function enqueue(Request $request)
         {
-            $details = new SendWelcomeEmail();
-            dispatch($details);
+            dispatch(new SendWelcomeEmail($request['email']));
         }
     }
 ?>
