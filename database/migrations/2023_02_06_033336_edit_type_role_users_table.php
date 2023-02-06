@@ -14,7 +14,7 @@ class EditTypeRoleUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->smallInteger('role')->tinyInteger('role')->unsigned()->default(0)->change();
+            $table->tinyInteger('role')->unsigned()->default(0)->after('phone');
         });
     }
 
