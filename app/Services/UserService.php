@@ -55,7 +55,7 @@
                 DB::rollBack();
             }
 
-             return $user;
+            return $user;
         }
 
         public function findId($id)

@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->userName,
                 'address' => $faker->streetAddress,
                 'phone' => $faker->numerify('0#########'),
-                'role' => $faker->boolean
+                'role' => $faker->numberBetween(0, 1)
             ]);
         }
     }

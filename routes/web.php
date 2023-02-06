@@ -27,9 +27,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('users')->middleware('checklogin')->group( function() {
     Route::get('', [UserController::class, 'index'])->name('user.list');
-    Route::get('create', [UserController::class, 'create'])->middleware('can:isAdmin')->name('user.create');
-    Route::post('store', [UserController::class, 'store'])->middleware('can:isAdmin')->name('user.store');
-    Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('can:isAdmin')->name('user.edit');
-    Route::put('update', [UserController::class, 'update'])->middleware('can:isAdmin')->name('user.update');
-    Route::get('delete/{id}', [UserController::class, 'delete'])->middleware('can:isAdmin')->name('user.delete');
+    Route::prefix('admin')->group( function() {
+        Route::get('create', [UserController::class, 'create'])->middleware('can:isAdmin')->name('user.create');
+        Route::post('store', [UserController::class, 'store'])->middleware('can:isAdmin')->name('user.store');
+        Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('can:isAdmin')->name('user.edit');
+        Route::put('update', [UserController::class, 'update'])->middleware('can:isAdmin')->name('user.update');
+        Route::get('delete/{id}', [UserController::class, 'delete'])->middleware('can:isAdmin')->name('user.delete');
+    });
 });

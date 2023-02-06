@@ -29,7 +29,7 @@ class CreateUserRequest extends FormRequest
             'password' => 'required|min:8|string|max:255|confirmed',
             'address' => 'required|string|max:255',
             'phone' => 'required|regex:/(0)[0-9]{0,15}/',
-            'role' => 'required'
+            'role' => 'required|integer|between:0,1'
         ];
     }
 }

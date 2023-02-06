@@ -30,6 +30,6 @@ class WelcomeEmail extends Mailable
      */
     public function build()
     {
-        return $this->from('leduymanh1802@gmail.com')->subject('Your Email registraion successfully')->view('user.welcome');
+        return $this->from(env('MAIL_FROM_ADDRESS'))->subject('Your Email registraion successfully')->view('user.welcome');
     }
 }
