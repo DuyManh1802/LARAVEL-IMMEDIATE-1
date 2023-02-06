@@ -8,7 +8,6 @@
     use Illuminate\Support\Facades\DB;
     use App\Mail\WelcomeEmail;
     use Illuminate\Support\Facades\Mail;
-    use App\Jobs\SendWelcomeEmail;
 
     class UserService
     {

@@ -32,5 +32,4 @@ Route::prefix('users')->middleware('checklogin')->group( function() {
     Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('can:isAdmin')->name('user.edit');
     Route::put('update', [UserController::class, 'update'])->middleware('can:isAdmin')->name('user.update');
     Route::get('delete/{id}', [UserController::class, 'delete'])->middleware('can:isAdmin')->name('user.delete');
-    Route::get('test-email', [JobController::class, 'enqueue']);
 });
