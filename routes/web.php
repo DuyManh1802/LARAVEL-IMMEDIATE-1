@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +25,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('users')->group( function() {
+Route::prefix('users')->middleware('checklogin')->group( function() {
     Route::get('', [UserController::class, 'index'])->name('user.list');
-    Route::get('create', [UserController::class, 'create'])->name('user.create');
-    Route::post('store', [UserController::class, 'store'])->name('user.store');
-    Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('update', [UserController::class, 'update'])->name('user.update');
-    Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::prefix('admin')->group( function() {
+        Route::get('create', [UserController::class, 'create'])->middleware('can:isAdmin')->name('user.create');
+        Route::post('store', [UserController::class, 'store'])->middleware('can:isAdmin')->name('user.store');
+        Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('can:isAdmin')->name('user.edit');
+        Route::put('update', [UserController::class, 'update'])->middleware('can:isAdmin')->name('user.update');
+        Route::get('delete/{id}', [UserController::class, 'delete'])->middleware('can:isAdmin')->name('user.delete');
+    });
 });

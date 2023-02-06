@@ -57,6 +57,7 @@
             <th scope="col">Email</th>
             <th scope="col">Address</th>
             <th scope="col">Phone</th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +68,7 @@
             <td>{{ $user->email }}</td>
             <td>{{ $user->address }}</td>
             <td>{{ $user->phone }}</td>
+            <td>{{ $user->role ? "Admin" : "Staff"}}</td>
             <td>
                 <a href="{{ route('user.edit', ['id'=>$user->id]) }}"><button type="button"
                         class="btn btn-primary btn-sm">Edit</button></a>
