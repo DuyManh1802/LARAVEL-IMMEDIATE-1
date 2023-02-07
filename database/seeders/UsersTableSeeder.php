@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Classroom;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -29,7 +30,8 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->userName,
                 'address' => $faker->streetAddress,
                 'phone' => $faker->numerify('0#########'),
-                'role' => $faker->numberBetween(0, 1)
+                'role' => $faker->numberBetween(0, 1),
+                'classroom_id' => Classroom::all()->random()->id
             ]);
         }
     }

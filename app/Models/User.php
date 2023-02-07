@@ -24,7 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'address',
         'phone',
-        'role'
+        'role',
+        'classroom_id'
     ];
 
     /**
@@ -45,4 +46,28 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function classroom(){
+        return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
+    }
+
+    public function scopeSearchEmail($query, $param)
+    {
+        return $query->where('email', 'LIKE', "%$param%");
+    }
+
+    public function scopeSearchName($query, $param)
+    {
+        return $query->where('name', 'LIKE', "%$param%");
+    }
+
+    public function scopeSearchAddress($query, $param)
+    {
+        return $query->where('address', 'LIKE', "%$param%");
+    }
+
+    public function scopeSearchPhone($query, $param)
+    {
+        return $query->where('phone', $param);
+    }
 }

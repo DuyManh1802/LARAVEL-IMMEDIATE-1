@@ -53,6 +53,7 @@
     <thead>
         <tr>
             <th scope="col">STT</th>
+            <th scope="col">Classroom</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Address</th>
@@ -64,6 +65,7 @@
         @foreach ( $users as $key => $user )
         <tr>
             <th scope="row">{{ $key+1 }}</th>
+            <td>{{ $user->classroom->name }}</td>
             <td>{{ UpperText::upperText($user->name) }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->address }}</td>
