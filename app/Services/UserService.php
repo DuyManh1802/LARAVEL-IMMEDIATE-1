@@ -2,36 +2,21 @@
     namespace App\Services;
 
     use App\Models\User;
+    use App\Models\Classroom;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
     use Exception;
     use Illuminate\Support\Facades\DB;
     use App\Mail\WelcomeEmail;
     use Illuminate\Support\Facades\Mail;
-
+    use App\Events\CreatedUser;
     class UserService
     {
         public function allUser(Request $request)
         {
             $user = User::orderBy('email');
 
-            if (isset($request->email)){
-                $user = $user->where('email', 'LIKE', "%$request->email%");
-            }
-
-            if (isset($request->name)){
-                $user = $user->where('name', 'LIKE', "%$request->name%");
-            }
-
-            if (isset($request->address)){
-                $user = $user->where('address', 'LIKE', "%$request->address%");
-            }
-
-            if (isset($request->phone)){
-                $user = $user->where('phone', '=', "$request->phone");
-            }
-
-            return $user->paginate(20);
+            return $user->searchEmail($request)->searchName($request)->searchAddress($request)->searchPhone($request)->paginate(20);
         }
 
         public function storeUser(Request $request)
@@ -40,6 +25,7 @@
                 DB::beginTransaction();
 
                 $user = User::create([
+                    'classroom_id' => $request->classroom_id,
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
@@ -48,7 +34,7 @@
                     'role' => $request->role
                 ]);
 
-                Mail::to($request['email'])->queue(new WelcomeEmail($user));
+                event(new CreatedUser($user));
 
                 DB::commit();
             } catch (Exception $ex){
@@ -97,6 +83,11 @@
             }
 
             return $user;
+        }
+
+        public function allClassroom()
+        {
+            return Classroom::all();
         }
     }
 ?>

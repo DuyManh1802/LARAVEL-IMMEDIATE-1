@@ -9,6 +9,14 @@
                 @csrf
 
                 <div class="row mb-3">
+                    <label>Classroom</label>
+                    <select name="classroom_id" class="col-md-6">
+                        @foreach ($classrooms as $classroom)
+                        <option value="{{ $classroom->id }}" checked>{{ $classroom->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="row mb-3">
                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                     <div class="col-md-6">

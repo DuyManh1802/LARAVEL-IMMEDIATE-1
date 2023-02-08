@@ -7,6 +7,7 @@
     use App\Http\Requests\CreateUserRequest;
     use App\Http\Requests\EditUserRequest;
     use Exception;
+    use Illuminate\Support\Facades\Auth;
 
     class UserController extends Controller
     {
@@ -30,7 +31,9 @@
 
         public function create()
         {
-            return view('user.create');
+            $classrooms = $this->userService->allClassroom();
+
+            return view('user.create', compact('classrooms'));
         }
 
         public function store(CreateUserRequest $request)

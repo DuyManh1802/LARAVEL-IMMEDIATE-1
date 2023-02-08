@@ -25,7 +25,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('users')->middleware('checklogin')->group( function() {
+Route::prefix('users')->middleware('checklogin', 'classable')->group( function() {
     Route::get('', [UserController::class, 'index'])->name('user.list');
     Route::prefix('admin')->group( function() {
         Route::get('create', [UserController::class, 'create'])->middleware('can:isAdmin')->name('user.create');
