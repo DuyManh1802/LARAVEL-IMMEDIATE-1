@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Symfony\Component\HttpFoundation\Request;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -51,23 +52,39 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
     }
 
-    public function scopeSearchEmail($query, $param)
+    public function scopeSearchEmail($query, Request $request)
     {
-        return $query->where('email', 'LIKE', "%$param%");
+        if (isset($request->email)){
+            $query->where('email', 'LIKE', "%$request->email%");
+        }
+
+        return $query;
     }
 
-    public function scopeSearchName($query, $param)
+    public function scopeSearchName($query, Request $request)
     {
-        return $query->where('name', 'LIKE', "%$param%");
+        if (isset($request->name)){
+            $query->where('name', 'LIKE', "%$request->name%");
+        }
+
+        return $query;
     }
 
-    public function scopeSearchAddress($query, $param)
+    public function scopeSearchAddress($query, Request $request)
     {
-        return $query->where('address', 'LIKE', "%$param%");
+        if (isset($request->address)){
+            $query->where('address', 'LIKE', "%$request->address%");
+        }
+
+        return $query;
     }
 
-    public function scopeSearchPhone($query, $param)
+    public function scopeSearchPhone($query, Request $request)
     {
-        return $query->where('phone', $param);
+        if (isset($request->phone)){
+            $query->where('phone', $request->phone);
+        }
+
+        return $query;
     }
 }

@@ -16,23 +16,7 @@
         {
             $user = User::orderBy('email');
 
-            if (isset($request->email)){
-                $user = User::searchEmail("$request->email");
-            }
-
-            if (isset($request->name)){
-                $user = User::searchName("$request->name");
-            }
-
-            if (isset($request->address)){
-                $user = User::searchAddress("$request->Address");
-            }
-
-            if (isset($request->phone)){
-                $user = User::searchPhone("$request->phone");
-            }
-
-            return $user->paginate(20);
+            return $user->searchEmail($request)->searchName($request)->searchAddress($request)->searchPhone($request)->paginate(20);
         }
 
         public function storeUser(Request $request)
