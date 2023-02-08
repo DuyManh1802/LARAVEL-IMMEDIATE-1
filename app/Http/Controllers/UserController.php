@@ -32,6 +32,7 @@
         public function create()
         {
             $classrooms = $this->userService->allClassroom();
+
             return view('user.create', compact('classrooms'));
         }
 
