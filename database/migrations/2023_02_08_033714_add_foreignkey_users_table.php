@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditTypeRoleUsersTable extends Migration
+class AddForeignkeyUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class EditTypeRoleUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('role')->default(0)->after('phone');
+            $table->foreignId('classroom_id')->constrained('classrooms')->onDelete('cascade');
         });
     }
 
@@ -25,9 +25,9 @@ class EditTypeRoleUsersTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('users', 'role')){
+        if (Schema::hasColumn('users', 'classroom_id')){
             Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('role');
+                $table->dropColumn('classroom_id');
             });
         }
     }
