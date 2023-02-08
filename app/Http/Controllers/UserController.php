@@ -11,12 +11,11 @@
 
     class UserController extends Controller
     {
-        private $userService, $classroom;
+        private $userService;
 
         public function __construct()
         {
             $this->userService = new UserService();
-            $this->classroom = new UserService();
         }
 
         public function index(Request $request)
@@ -32,7 +31,7 @@
 
         public function create()
         {
-            $classrooms = $this->classroom->allClassroom();
+            $classrooms = $this->userService->allClassroom();
             return view('user.create', compact('classrooms'));
         }
 
